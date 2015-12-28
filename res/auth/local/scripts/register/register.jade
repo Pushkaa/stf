@@ -1,0 +1,49 @@
+.register(ng-controller='RegisterInCtrl')
+  .register-wrapper
+    a(href='./')
+      img(width='160', height='160', src='/static/logo/exports/STF-512.png', title='STF')
+
+    form(name='signin', novalidate, ng-submit='submit()')
+      .alert.alert-danger(ng-show='error')
+        span(ng-show='error.$invalid', translate) Check errors below
+        span(ng-show='error.$incorrect', translate) Incorrect login details
+        span(ng-show='error.$server', translate) Server error. Check log output.
+
+      .form-group
+        .input-group
+          span.input-group-addon
+            i.fa.fa-user
+          input.form-control(ng-model='username', name='username', required, type='username', placeholder='Username',
+          autocorrect='off', autocapitalize='off', spellcheck='false', autocomplete='section-register username')
+        .alert.alert-warning(ng-show='signin.username.$dirty && signin.username.$invalid')
+          span(ng-show='signin.username.$error.required', translate) Please enter your username
+
+      .form-group
+        .input-group
+          span.input-group-addon
+            i.fa.fa-envelope
+          input.form-control(ng-model='email', name='email', required, type='email', placeholder='E-mail',
+          autocorrect='off', autocapitalize='off', spellcheck='false', autocomplete='section-register email')
+        .alert.alert-warning(ng-show='signin.email.$dirty && signin.email.$invalid')
+          span(ng-show='signin.email.$error.email', translate) Please enter a valid email
+          span(ng-show='signin.email.$error.required', translate) Please enter your email
+
+      .form-group
+        .input-group
+          span.input-group-addon
+            i.fa.fa-key
+          input.form-control(ng-model='password', name='password', required, type='password', placeholder='Password',
+          autocorrect='off', autocapitalize='off', spellcheck='false', autocomplete='false')
+        .alert.alert-warning(ng-show='signin.password.$dirty && signin.password.$invalid')
+          span(translate) Please enter your password
+
+      .form-group
+        .input-group
+          span.input-group-addon
+            i.fa.fa-key
+          input.form-control(ng-model='password2', name='password2', required, type='password', placeholder='Password',
+          autocorrect='off', autocapitalize='off', spellcheck='false', autocomplete='false')
+        .alert.alert-warning(ng-show='signin.password2.$dirty && signin.password2.$invalid')
+          span(translate) Repeat your password
+
+      input.btn.btn-lg.btn-primary.btn-block(type='submit', value='Log In')
