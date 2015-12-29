@@ -17,8 +17,11 @@
         .btn-group
           button(type='button', ng-model='$root.platform', btn-radio="'web'", translate).btn.btn-sm.btn-default-outline Web
           button(type='button', ng-model='$root.platform', btn-radio="'native'", translate).btn.btn-sm.btn-default-outline Native
-
       li(ng-show='!$root.basicMode')
         a(ng-href='/#!/help', accesskey='6')
-          i.fa.fa-question-circle.fa-fw
-          | {{ "Help" | translate }}
+          i.fa.fa-question-circle
+          span {{ "Help" | translate }}
+      li
+        a(ng-href='/auth/api/v1/local/logout')
+          i.fa.fa-sign-out
+          span Logout

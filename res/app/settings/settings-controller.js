@@ -1,4 +1,6 @@
-module.exports = function SettingsCtrl($scope, gettext) {
+module.exports = function SettingsCtrl($scope, gettext, UserService) {
+  var user = UserService.currentUser
+  var userRoles = user.roles || []
 
   $scope.settingTabs = [
     {
@@ -12,4 +14,12 @@ module.exports = function SettingsCtrl($scope, gettext) {
       templateUrl: 'settings/keys/keys.jade'
     }
   ]
+
+  if (~userRoles.indexOf('admin')) {
+    $scope.settingTabs.push({
+      title: gettext('Users'),
+      icon: 'fa-users fa-fw',
+      templateUrl: 'settings/users/users.jade'
+    })
+  }
 }

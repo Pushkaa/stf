@@ -1,0 +1,37 @@
+.row(ng-controller="UsersCtrl as userctrl")
+  .col-md-12
+    .widget-container.fluid-height
+      .heading
+        i.fa.fa-users
+        span Users
+        button.btn.pull-right.btn-sm.btn-primary-outline(ng-click="userctrl.openAddUserModal()")
+          i.fa.fa-plus
+      .widget-content.padded
+        table.table.table-striped
+          thead
+            tr
+              td Role
+              td Email
+              td Name
+              td IP
+              td Created At
+              td Logged At
+              td &nbsp;
+          tbody
+            tr(ng-repeat="user in userctrl.users track by $index")
+              td
+                span(ng-bind="::user.roles | userole")
+              td
+                span(ng-bind="::user.email")
+              td
+                span(ng-bind="::user.name")
+              td
+                span(ng-bind="::user.ip")
+              td
+                span(ng-bind="::user.createdAt | date : 'medium'")
+              td
+                span(ng-bind="::user.lastLoggedInAt | date : 'medium'")
+              td
+                button.btn.btn-danger-outline.btn-sm(type="button", ng-if="!user.isCurrent" ng-click="userctrl.remove(user)")
+                  i.fa.fa-trash-o
+

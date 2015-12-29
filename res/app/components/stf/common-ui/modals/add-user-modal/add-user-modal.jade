@@ -1,0 +1,59 @@
+.stf-add-adb-key-modal.stf-modal
+  form(name='signin', novalidate, ng-submit='ok()')
+    .modal-header
+        button(type='button', ng-click='cancel()').close &times;
+        h4.modal-title
+          i.fa.fa-user-plus
+          .button-spacer
+          span(translate) Add new user to STF?
+
+    .modal-body
+      .alert.alert-danger(ng-show='error')
+        span(ng-show='error.$invalid', translate) Check errors below
+        span(ng-show='error.$incorrect', translate) Incorrect login details
+        span(ng-show='error.$server', translate) Server error. Check log output.
+
+      .form-group
+        .input-group
+          span.input-group-addon
+            i.fa.fa-user
+          input.form-control(ng-model='mv.user.name', name='username', required, type='username', placeholder='Username',
+          autocorrect='off', autocapitalize='off', spellcheck='false', autocomplete='section-register username')
+        .alert.alert-warning(ng-show='signin.username.$dirty && signin.username.$invalid')
+          span(ng-show='signin.username.$error.required', translate) Please enter your username
+
+      .form-group
+        .input-group
+          span.input-group-addon
+            i.fa.fa-envelope
+          input.form-control(ng-model='mv.user.email', name='email', required, type='email', placeholder='E-mail',
+          autocorrect='off', autocapitalize='off', spellcheck='false', autocomplete='section-register email')
+        .alert.alert-warning(ng-show='signin.email.$dirty && signin.email.$invalid')
+          span(ng-show='signin.email.$error.email', translate) Please enter a valid email
+          span(ng-show='signin.email.$error.required', translate) Please enter your email
+
+      .form-group
+        .input-group
+          span.input-group-addon
+            i.fa.fa-key
+          input.form-control(ng-model='mv.user.password', name='password', required, type='password', placeholder='Password',
+          autocorrect='off', autocapitalize='off', spellcheck='false', autocomplete='false')
+        .alert.alert-warning(ng-show='signin.password.$dirty && signin.password.$invalid')
+          span(translate) Please enter your password
+
+      .form-group
+        .input-group
+          span.input-group-addon
+            i.fa.fa-key
+          input.form-control(ng-model='mv.user.password2', name='password2', required, type='password', placeholder='Password',
+          autocorrect='off', autocapitalize='off', spellcheck='false', autocomplete='false')
+        .alert.alert-warning(ng-show='signin.password2.$dirty && signin.password2.$invalid')
+          span(translate) Repeat your password
+
+    .modal-footer
+      button.btn.btn-primary-outline.btn-sm.pull-right(type='submit')
+        i.fa.fa-plus.fa-fw
+        strong(translate) Add User
+
+      button.btn.btn-default-outline.btn-sm.pull-right(ng-click='cancel()')
+        span(translate) Cancel
