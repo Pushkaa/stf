@@ -142,9 +142,17 @@ npm link
 
 You should now have a working installation for local development.
 
+## Add an admin user
+
+Before running following command make sure your rethinkDB is running
+```bash
+stf local-admin --username <username> --email <email> --password <password>
+```
+NOTE: This command will remove all existing admin users. We recommend it only when you first time lunch the application instance then use "Settings" to create more users.
+
 ## Running
 
-STF comprises of several independent processes that must normally be launched separately. In our own setup each one these processes is its own [systemd](http://www.freedesktop.org/wiki/Software/systemd/) unit. See [DEPLOYMENT.md](doc/DEPLOYMENT.md) and [Setup Examples](https://github.com/openstf/setup-examples) if you're interested.
+STF comprises of several independent processes that must normally be launched separately. In our own setup each one these processes is its own [systemd](http://www.freedesktop.org/wiki/Software/systemd/) unit. See [DEPLOYMENT.md](doc/DEPLOYMENT.md) and [Setup Exactlymples](https://github.com/openstf/setup-examples) if you're interested.
 
 For development purposes, however, there's a helper command to quickly launch all required processes along with a mock login implementation. Note that you **must** have RethinkDB running first.
 
