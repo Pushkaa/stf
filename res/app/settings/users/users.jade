@@ -18,7 +18,7 @@
               td Logged At
               td &nbsp;
           tbody
-            tr(ng-repeat="user in userctrl.users track by $index")
+            tr(ng-repeat="user in userctrl.users | orderBy: '-createdAt' track by user.email")
               td
                 span(ng-bind="::user.roles | userole")
               td

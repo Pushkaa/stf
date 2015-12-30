@@ -10,7 +10,6 @@ require.ensure([], function (require) {
   , 'ngTouch'
   , require('gettext').name
   , require('./signin').name
-  , require('./register').name
   ])
     .config(function ($routeProvider, $locationProvider) {
       $locationProvider.html5Mode(true)

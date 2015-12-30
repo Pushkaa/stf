@@ -6,12 +6,20 @@ module.exports =
       var ctrl = this
       ctrl.user = user
 
-      $scope.ok = function () {
+      ctrl.ok = function () {
         $modalInstance.close(ctrl.user)
       }
 
-      $scope.cancel = function () {
+      ctrl.cancel = function () {
         $modalInstance.dismiss('cancel')
+      }
+
+      ctrl.toggleUserAdminRole = function() {
+        if (ctrl.user.isAdmin) {
+          ctrl.user.removeRoles('admin')
+        } else {
+          ctrl.user.addRoles('admin')
+        }
       }
     }
 

@@ -1,7 +1,22 @@
 module.exports = function UserManagmentFactory(UserService) {
   var currentUser = UserService.currentUser
 
+  function addRoleIterator(role) {
+    var idx = this._roles.indexOf(role)
+    if (idx === -1) {
+      this.roles[this.roles.length] = role
+    }
+  }
+
+  function removeRoleIterator(role) {
+    var idx = this._roles.indexOf(role)
+    if (idx !== -1) {
+      this.roles.splice(idx, 1)
+    }
+  }
+
   function User(params) {
+    params = params || {}
     this._email = params.email || ''
     this._roles = params.roles || []
     this._name = params.name || ''
@@ -48,7 +63,7 @@ module.exports = function UserManagmentFactory(UserService) {
 
   Object.defineProperty(User.prototype, 'isAdmin', {
     get: function () {
-      return ~this._roles.indexOf('admin')
+      return !!~this._roles.indexOf('admin')
     }
   })
 
@@ -58,7 +73,23 @@ module.exports = function UserManagmentFactory(UserService) {
     }
   })
 
+  Object.defineProperty(User.prototype, 'addRoles', {
+    value: function () {
+      var roles = [].slice.call(arguments)
+      if (roles.length) {
+        angular.forEach(roles, addRoleIterator.bind(this))
+      }
+    }
+  })
 
+  Object.defineProperty(User.prototype, 'removeRoles', {
+    value: function () {
+      var roles = [].slice.call(arguments)
+      if (roles.length) {
+        angular.forEach(roles, removeRoleIterator.bind(this))
+      }
+    }
+  })
 
   return User
 }

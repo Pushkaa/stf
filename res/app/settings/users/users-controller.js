@@ -4,6 +4,7 @@ module.exports = function UsersCtrl(
   AddUserModalService
 ) {
   var ctrl = this
+  var cachedUser
 
   ctrl.users = []
 
@@ -13,11 +14,16 @@ module.exports = function UsersCtrl(
     })
 
   ctrl.openAddUserModal = function() {
-    AddUserModalService.open(new UserRegisterFactory({}))
+    AddUserModalService.open(cachedUser || (new UserRegisterFactory()))
       .then(function(user) {
-        if (user instanceof UserRegisterFactory) {
-          console.log('OK')
-        }
+        // cache user object, if there is any error we will pass this object
+        // into a modal so user won't lost his data
+        cachedUser = user
+        return UserManagment.addUser(user)
+      })
+      .then(function(user) {
+        cachedUser = null
+        ctrl.users[ctrl.users.length] = user
       })
   }
 
@@ -28,7 +34,7 @@ module.exports = function UsersCtrl(
    */
   ctrl.remove = function(user) {
     return UserManagment.removeByEmail(user.email)
-      .then(function(response) {
+      .then(function() {
         ctrl.users.splice(ctrl.users.indexOf(user), 1)
       })
   }

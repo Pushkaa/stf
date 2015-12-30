@@ -1,26 +1,32 @@
-module.exports = function UserManagment($q, $http, UserManagmentFactory) {
+module.exports = function UserManagment($q, $http, HttpUtil, UserManagmentFactory) {
   var srv = this
-
-  function getData(response) {
-    var data = response.data
-
-    if (data.success) {
-      return data.users
-    } else {
-      $q.reject(data)
-    }
-  }
 
   function normalize(users) {
     return users.map(function(model) {
-      return new UserManagmentFactory(model)
+      return modelToUser(model)
     })
+  }
+
+  function modelToUser(model) {
+    return new UserManagmentFactory(model)
   }
 
   srv.loadAll = function () {
     return $http.get('/app/api/v1/users')
-      .then(getData)
+      .then(HttpUtil.getDataOrReject('users'))
       .then(normalize)
+  }
+
+  /**
+   * Add new user
+   * @param {UserRegisterFactory} user A user object
+   * @return {Promise} Promise returns an instance of
+   *                   UserManagmentFactory object
+   */
+  srv.addUser = function(user) {
+    return $http.post('/app/api/v1/users', user.toJSON())
+      .then(HttpUtil.getDataOrReject('user'))
+      .then(modelToUser)
   }
 
   srv.removeByEmail = function(email) {
